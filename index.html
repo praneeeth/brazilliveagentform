@@ -268,9 +268,6 @@
             document.getElementById("name").placeholder = language == "pt" ? "Por favor, insira seu nome" : "Please enter your name"
             document.getElementById("email").placeholder = language == "pt" ? "Por favor introduza o seu e-mail" : "Please enter your email"
             document.getElementById("phone").placeholder = language == "pt" ? "Por favor, insira seu número de telefone" : "Please enter your mobile number"
-            document.getElementById("product-option").innerHTML = language == "pt" ? "Sila pilih saluran pembayaran anda" : "Please select your payment channel"
-            document.getElementById("game-option").innerHTML = language == "pt" ? "Sila pilih permainan / produk anda" : "Please select your game/product"
-            document.getElementById("submit-button").value = language == "pt" ? "Serahkan" : "Submit"
             document.getElementById("product-option").innerHTML = language == "pt" ? "Selecione seu canal de pagamento" : "Please select your payment channel"
             document.getElementById("game-option").innerHTML = language == "pt" ? "Selecione seu jogo/produto" : "Please select your game/product"
             document.getElementById("submit-button").value = language == "pt" ? "Enviar" : "Submit"
@@ -280,7 +277,6 @@
                 message.id = "message-header"
                 document.getElementById("offline-message").appendChild(message)
                 const messageBox = document.createElement("textarea")
-                // messageBox.placeholder = language == "pt" ? "message" : "message"
                 messageBox.type = "text"
                 messageBox.id = "user-message"
                 messageBox.name = "message"
@@ -290,7 +286,7 @@
                 document.getElementById("offline-message").appendChild(messageBox)
                 // messageBox.setAttribute("oninput", messageHandler());
                 const attachment = document.createElement("h6")
-                attachment.innerHTML = language == "pt" ? "Anexos" : "Attachment"
+                attachment.innerHTML = language == "pt" ? "Attachment" : "Attachment"
                 attachment.id = "attachment-header"
                 document.getElementById("offline-message").appendChild(attachment)
                 const attachmentInput = document.createElement("input")
@@ -322,7 +318,7 @@
         }
 
         $(document).ready(function () {
-            ["Aceking",
+            var gamesArray = ["Aceking",
 "Ahlan",
 "Alchemy Stars",
 "Amor Amis",
@@ -461,8 +457,8 @@
 "Ame Digital",
 "Codacash",
 "n/a"]
-            })
-        });
+                })
+            });
 
         function back() {
             window.parent.postMessage(
@@ -515,7 +511,7 @@
             const message = document.getElementById("user-message")
             if (message.value.length == 0) {
                 // message.classList.add('invalid-placeholder');
-                document.getElementById("invalid-message").innerHTML = language == "pt" ? "" : "A message should be sent to connect to an agent"
+                document.getElementById("invalid-message").innerHTML = language == "pt" ? "Uma mensagem deve ser enviada para se conectar a um agente" : "A message should be sent to connect to an agent"
             }
             else {
                 // message.classList.remove("invalid-placeholder");
@@ -546,10 +542,11 @@
             if (data["payment"] === "null" || data.games === "null" || data.email.length == 0 || data.name.length == 0 || !emailRegex.test(data.email)) {
                 if (data.name.length == 0) {
                     document.getElementById("invalid-message").innerHTML = language == "pt" ? "O nome é necessário para conectar um agente" : "Name is required to connect an agent!"
-                    name.placeholder = language == "" ? 'O nome é necessário para conectar um agente' : "Name is required to connect an agent"
+                    name.placeholder = language == "pt" ? 'O nome é necessário para conectar um agente' : "Name is required to connect an agent"
                     name.classList.add('invalid-placeholder');
                     email.classList.remove("invalid-placeholder");
-                    
+                    phone.classList.remove("invalid-placeholder")
+                    message.classList.remove("invalid-placeholder")
                     name.focus();
                 }
                 else if (data.email.length == 0) {
@@ -557,27 +554,30 @@
                     email.placeholder = language == "pt" ? 'O e-mail é necessário para conectar um agente!' : "Email is required to connect an agent"
                     email.classList.add('invalid-placeholder');
                     name.classList.remove("invalid-placeholder");
-                    
+                    phone.classList.remove("invalid-placeholder")
+                    message.classList.remove("invalid-placeholder")
                     email.focus();
                 }
                 else if (!emailRegex.test(data.email)) {
-                    document.getElementById("invalid-message").innerHTML = language == "id" ? "É necessário um e-mail válido para conectar um agente" : "Valid email is required to connect an agent"
-                    email.placeholder = language == "id" ? 'É necessário um e-mail válido para conectar um agente' : "Valid email is required to connect an agent"
+                    document.getElementById("invalid-message").innerHTML = language == "pt" ? "É necessário um e-mail válido para conectar um agente" : "Valid email is required to connect an agent"
+                    email.placeholder = language == "pt" ? 'É necessário um e-mail válido para conectar um agente' : "Valid email is required to connect an agent"
                     name.classList.remove("invalid-placeholder");
-                    
+                    phone.classList.remove("invalid-placeholder")
+                    message.classList.remove("invalid-placeholder")
                     email.focus();
                 }
+
+                else if(data.message.length == 0 ) {    //Added
+                    document.getElementById("invalid-message").innerHTML = language == "pt" ? "Uma mensagem deve ser enviada para se conectar a um agente " : "A message should be sent to connect to an agent"
+                    message.placeholder = language == "pt" ? 'Uma mensagem deve ser enviada para se conectar a um agente ' : "A message should be sent to connect to an agent"
+                    name.classList.add('invalid-placeholder');
+                    email.classList.remove("invalid-placeholder");
+                    phone.classList.remove("invalid-placeholder")
+                    message.classList.remove("invalid-placeholder")
+                    message.focus();
+                }
                 
-            //  else if(data.message.length == 0 ) {    //Added
-            //         document.getElementById("invalid-message").innerHTML = language == "pt" ? "Mesej anda akan dihantar untuk berhubung dengan ejen " : "A message should be sent to connect to an agent"
-            //         message.placeholder = language == "pt" ? 'Mesej anda akan dihantar untuk berhubung dengan ejen ' : "A message should be sent to connect to an agent"
-            //         name.classList.add('invalid-placeholder');
-            //         email.classList.remove("invalid-placeholder");
-            //         phone.classList.remove("invalid-placeholder")
-            //         message.classList.remove("invalid-placeholder")
-            //         message.focus();
-            //     }
-                
+                console.log("Empty/Invalid values are present in the form ")
             }
             else {
                 try {
@@ -687,20 +687,19 @@
                     );
                 }
 
+                
             }
-            }
-        
+        }
     </script>
     <div class="demo-wrap">
         <div style="max-width: 600px;" class="demo-content center">
             <img src="https://cdn.yellowmessenger.com/j4mnoorqT5BZ1620811806565.png" alt=""
                 style="float: right;max-width: 20px;max-height: 20px;margin-right: 5px;" onclick="back()">
             <div id="selection" style="max-width: 90%;">
-         <center>
+                <center>
                     <h6 id="title"
                         style="color: black;text-align: left;margin-bottom: 25px;margin-top: 10px;font-size: 12px;">
-                        Por favor, aguarde, um de nossos agentes de Suporte ao Cliente te atenderá em breve 😊
-                    </h6>
+                        Por favor, aguarde, um de nossos agentes de Suporte ao Cliente te atenderá em breve 😊                    </h6>
                 </center>
             </div>
             <p id="invalid-message" style="color:hsl(0, 100%, 50%);padding-left: 3px;font-size: 12px;"></p>
@@ -717,6 +716,20 @@
                 oninput="emailHandler()" required>
             
             
+            <h6 id="payment-header">
+                Método de Pagamento<sup>*</sup>
+            </h6>
+            <select style="width: 96%;
+            max-width: 96%;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 2px;
+            border-color: #a1a1a1;
+            height: 25px;" class="center" name="country" id="country">
+                <option id="product-option" value="null" disabled selected></option>
+            </select>
+            <!-- Pilih Saluran pembarayan yang Anda inginkan -->
+            <br>
             <h6 id="game-header">
                 Jogo/Produto<sup>*</sup>
             </h6>
@@ -729,29 +742,13 @@
             height: 25px;" class="center" name="games" id="games">
                 <option id="game-option" value="null" disabled selected></option>
             </select>
-        <h6 id="payment-header">
-            Método de Pagamento<sup>*</sup>
-        </h6>
-        <select style="width: 96%;
-        max-width: 96%;
-        margin-left: auto;
-        margin-right: auto;
-        border-radius: 2px;
-        border-color: #a1a1a1;
-        height: 25px;" class="center" name="country" id="country">
-            <option id="product-option" value="null" disabled selected></option>
-        </select>
-        
-        <br>
-        
-        
-        <br>
-        <div id="offline-message">
-        </div> 
-        
-        <input type="button" value="Enviar" id="submit-button" onclick="submit()"
-            style="max-width: 60%;margin: 15px auto;background-color: #385072;color: #ffffff"
-            class="btn btn-primary center" />
+            <!-- Silakan pilih produk/game nya -->
+            <br>
+            <div id="offline-message">
+            </div>
+            <input type="button" value="Enviar" id="submit-button" onclick="submit()"
+                style="max-width: 60%;margin: 15px auto;background-color: #385072;color: #ffffff"
+                class="btn btn-primary center" />
         </div>
     </div>
 </body>
